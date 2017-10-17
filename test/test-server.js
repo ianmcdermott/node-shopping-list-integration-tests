@@ -138,3 +138,81 @@ describe('Shopping List', function() {
       });
   });
 });
+
+//Tests for Recipes
+describe('Recipe List', function(){
+
+  before(function(){
+    return runServer();
+  });
+
+  after(function(){
+    return closeServer();
+  });
+
+  it("Should list items on GET", function(){
+    return chai.request(app)
+      .get('/recipes')
+      .then(function(res){
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('array');
+
+        res.body.length.should.be.at.least(1);
+
+        const expectedKeys = ['id', 'name', 'ingredients'];
+        res.body.forEach(function(item){
+          item.should.be.a('object');
+          item.should.include.keys(expectedKeys);
+        });
+      });
+  });
+
+  it("Should add item on POST", function(){
+    const newItem = {name: "Apple Pie", ingredients: ['apples', 'sugar', 'flour']}
+    return chai.request(app)
+      .post('/recipes')
+      .send(newItem)
+      .then(function(res){
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.include.keys('id', 'name', 'ingredients');
+        res.body.should.not.be.null;
+        res.body.should.deep.equal(Object.assign(newItem, {id: res.body.id}));
+      })
+  });
+
+  it("Should update items on PUT", function(){
+    const updateData = {
+      name: 'foo',
+      ingredients: ['bar', 'bizz', 'bang']
+    }
+
+    return chai.request(app)
+      .get('/recipes')
+      .then(function(res){
+        updateData.id = res.body[0].id;
+      
+
+      return chai.request(app)
+        .put(`/recipes/${updateData.id}`)
+        .send(updateData);
+      })
+      .then(function(res){
+        res.should.have.status(204);
+      });
+  });
+
+  it("Should remove item on DELETE", function(){
+    return chai.request(app)
+      .get("/recipes")
+      .then(function(res){
+        return chai.request(app)
+          .delete(`/recipes/${res.body[0].id}`);
+      })
+      .then(function(res){
+        res.should.have.status(204);
+      })
+  });
+})
