@@ -1,2 +1,10 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: mLgFYiFMMSp8z0O+bOnz9ps8qnEtMvs035lSQGjEXNM0enJ85PX6qIniLMO/3vucv/gJZCqmIhlXHeWYrZKGJmNsyJptpMUKMiykwCYCnX2wCKN+DCv2iIN+/TPxV1EmBqtgu1wRXnZrCHJT7XRIg4+e6LsQDF62PE0SsGNjsZ1FfCzJc380A/HvxPxU7351FExzrgpiZSUbkEr1gv91r2CU9cKAxYHzdLdwtopsc4RBkagK+4YUN6pYbiJOChscfW3uYjrOP80SvSEwsPYjnyQw7KSQaczB1zgStOqCviEdkI1nI+cU52OnSuZWyjsXGU08J+2xN4Ga1XVt5WRPUzCDMLf9os6YOMcxCdFmyD5Oh3AO37GSVC315dBY/pSiiR5glu9S8Sym9Za7+Y0JJ7q60Cmbkh3y75W6q9/iBRlT5EHsaAs86HuLOwGG/P3NI7jDGVU6KEj4oRA/6ikjC7r6Okfy2dx8Q3Jq5aGz+umAwW5N55uXEhkg7Z4J3V3iXbCJC2PEb25APVET9g45ubNmZPUpmiaQAv9ql7owUdRe5Lw5hUNQpO0tdm+rOevy4kE6yz2jG4NvtG+xUuZR6JrNbVQGxfBRgxd2hVj7zPrkZG3yKBLS+M9KHmfU3IqGnzJ+oc7TCRMJAtqhC2/mIQTvwromxAsPhNHkI66Gd8k=
+  app: https://git.heroku.com/guarded-beach-69171.git
+  on:
+    repo: ianmcdermott/node-shopping-list-integration-tests
+    branch: tests-for-recipes
